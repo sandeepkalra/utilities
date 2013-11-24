@@ -60,20 +60,24 @@ class CPhonebook {
 	CPhonebook() = default;
 
 public:
+
+
+	~CPhonebook() { entry.erase(begin(entry), end(entry)); }
+	CPhonebook(const CPhonebook&) = delete; // no copy allowed;
+	CPhonebook(const CPhonebook&&) = delete; // no move allowed;
+	
 	static CPhonebook& GetInstance()	{
 		static CPhonebook instance;
 		return instance;
 	}
 	
 	void SetPolicies(bool v_overwrite_on_insert = false, bool v_size_unlimited = false, int v_max_sz=100) 	{ 
+		// This function must be called at the start of usage of the CPhonebook, else may result in errors.
 		overwrite_on_insert = v_overwrite_on_insert; 
 		size_unlimited = v_size_unlimited; 
 		if (!size_unlimited) max_sz = v_max_sz;
 	}
-
-	~CPhonebook() { entry.erase(begin(entry), end(entry)); }
-	CPhonebook(const CPhonebook&) = delete; // no copy allowed;
-	CPhonebook(const CPhonebook&&) = delete; // no move allowed;
+	
 
 	bool Insert (const String &name, const String &phone_or_uri)	{
 		auto i = entry.find(name);		
@@ -82,7 +86,7 @@ public:
 			return true;
 		}
 		else if (i == entry.end()) {
-			if (!size_unlimited && entry.size() == max_sz) return false; //full
+			if (!size_unlimited && entry.size() >= max_sz) return false; //full
 			entry.insert(pair<String, String>(name, phone_or_uri));
 			return true;
 		}
