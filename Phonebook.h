@@ -48,7 +48,7 @@ struct ci_char_traits : public char_traits<char>
 };
 
 // this class does case-insensitive comparision
-typedef basic_string<char, ci_char_traits> String;
+typedef basic_string <char, ci_char_traits> String;
 
 
 //Note: This class is not thread-safe!
@@ -71,11 +71,11 @@ public:
 		if (!size_unlimited) max_sz = v_max_sz;
 	}
 
-	~CPhonebook() { }
+	~CPhonebook() { entry.erase(begin(entry), end(entry)); }
 	CPhonebook(const CPhonebook&) = delete; // no copy allowed;
 	CPhonebook(const CPhonebook&&) = delete; // no move allowed;
 
-	bool Insert(const String &name, const String &phone_or_uri)	{
+	bool Insert (const String &name, const String &phone_or_uri)	{
 		auto i = entry.find(name);		
 		if (overwrite_on_insert && i != entry.end() /* valid entry found */) {
 			i->second = phone_or_uri;
@@ -89,7 +89,7 @@ public:
 		else return false;
 	}
 
-	bool Delete(const String &name)	{
+	bool Delete (const String &name)	{
 		auto i = entry.find(name);
 		if (i == entry.end()) return false;
 		else
