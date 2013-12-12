@@ -278,6 +278,7 @@ public:
 	{ 
 		AsciiMap.clear();
 		UIDMap.clear();
+		for(auto i: Params) delete(i.second);
 		Params.clear();
 	}
 };
