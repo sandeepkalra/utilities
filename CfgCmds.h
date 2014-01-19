@@ -63,14 +63,6 @@ public:
                 mDefault = rhs.mDefault;
                 mValue = rhs.mValue;
 	}
-	CObj(const CObj<T>& rhs)  noexcept
-	{ 
-                mType = rhs.mType;
-		mMin = rhs.mMin;
-		mMax = rhs.mMax;
-		mDefault = rhs.mDefault;
-		mValue = rhs.mValue;
-	}
 	CObj(const CObj<T>&& rhs) noexcept
 	{	
                 mType = move(rhs.mType);
