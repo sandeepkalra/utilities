@@ -64,7 +64,7 @@ public:
 
 	~CPhonebook() { entry.erase(begin(entry), end(entry)); }
 	CPhonebook(const CPhonebook&) = delete; // no copy allowed;
-	CPhonebook(const CPhonebook&&) = delete; // no move allowed;
+	CPhonebook(CPhonebook&&) = delete; // no move allowed;
 	
 	static CPhonebook& GetInstance()	{
 		static CPhonebook instance;

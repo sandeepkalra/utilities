@@ -63,7 +63,7 @@ public:
                 mDefault = rhs.mDefault;
                 mValue = rhs.mValue;
 	}
-	CObj(const CObj<T>&& rhs) noexcept
+	CObj(CObj<T>&& rhs) noexcept //RValue - Move! 
 	{	
                 mType = move(rhs.mType);
                 mMin = move(rhs.mMin);
