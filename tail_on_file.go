@@ -14,10 +14,10 @@ const (
 )
 
 func main() {
-	filename := flag.String("filename", "", "file to trail on")
+	filename := flag.String("filename", "", "file to tail on")
 	flag.Parse()
 	if *filename == "" {
-		logrus.Fatal("filename to trail on wasn't provided. Pls check usage")
+		logrus.Fatal("filename to tail on wasn't provided. Pls check usage")
 		return
 	}
 
@@ -39,19 +39,17 @@ func main() {
 		offset = size - int64(BUFF_READ_SIZE)
 	}
 	for {
-		b := make([]byte, BUFF_READ_SIZE+1)
-		if n, err := f.ReadAt(b, offset); err == nil {
-			if n > 0 {
-				fmt.Print(string(b))
-				offset = offset + int64(n)
-			}
-		} else if err == io.EOF {
+		b := make([]byte, BUFF_READ_SIZE)
+		n, err := f.ReadAt(b, offset)
+		if n > 0 {
 			/* we read n, and wait for some time to try again */
-			if n > 0 {
-				fmt.Print(string(b))
-				offset = offset + int64(n)
-			}
+			fmt.Print(string(b))
+			offset = offset + int64(n)
+		}
+		if err == io.EOF {
 			time.Sleep(50 * time.Millisecond)
+		} else if err != nil {
+			logrus.Fatal("Error :", err)
 		}
 	}
 }
